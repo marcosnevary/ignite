@@ -1,32 +1,36 @@
-from core.repository import load_data
-from core.utils import get_user_input, show_options
+from core.repository import load_data, save_data
+from core.utils import clear_terminal, get_user_input, show_options
 
 
 def create_habit(name):
     data = load_data()
-    habits = data["habits"]
-    habits.append(name.lower().strip())
+    data["habits"].append(name.lower().strip())
+    save_data()
 
 
 def remove_habit(idx_habit):
     data = load_data()
-    habits = data["habits"]
-    del habits[idx_habit]
+    del data["habits"][idx_habit]
+    save_data()
 
 
 def edit_habit(idx_habit, name):
     data = load_data()
-    habits = data["habits"]
-    habits[idx_habit] = name
+    data["habits"][idx_habit] = name
+    save_data()
 
 
 def habits():
+    clear_terminal()
     data = load_data()
     habits = data["habits"]
     habits_functions = data["habits_functions"]
     idx_option = get_user_input(habits_functions, msg="Select an option: ")
 
+    clear_terminal()
     if idx_option == 0:
+        show_options(habits, title="Your habits:", format="itemize")
+        print("=" * 64)
         new_habit_name = input("Enter the name of the new habit: ")
         create_habit(new_habit_name)
 
@@ -40,4 +44,6 @@ def habits():
         remove_habit(idx_habit)
 
     if idx_option == 3:
-        show_options(habits)
+        show_options(habits, title="Your habits:", format="itemize")
+        print("=" * 64)
+        _ = input("Press enter to continue...")

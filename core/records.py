@@ -61,4 +61,4 @@ def records():
         idx_record = get_user_input(records, msg="Select the record to remove: ")
         remove_record(idx_record)
     if idx_option == 3:
-        show_options(records)
+        show_options(records, title="Your records:")

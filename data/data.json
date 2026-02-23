@@ -3,11 +3,7 @@
         "habits",
         "records"
     ],
-    "habits": [
-        "read",
-        "code",
-        "exercise"
-    ],
+    "habits": [],
     "records": [],
     "status": [
         "done",
