@@ -1,23 +1,26 @@
-from core.habits import habits
-from core.records import records
-from core.repository import load_data, save_data
-from core.utils import clear_terminal, get_user_input
+from src.core.habits import habits
+from src.core.records import records
+from src.database import save_data
+from src.utils.clear_terminal import clear_terminal
+from src.utils.options import main_menu
+
+ACTIONS = {
+    "1": habits,
+    "2": records,
+}
 
 
 def main():
-    data = load_data()
-    menus = data["menus"]
     while True:
         clear_terminal()
-        user_input = get_user_input(
-            menus, "Enter the number of the option you want to select: "
-        )
-        if user_input == -2:
+        idx_menu = main_menu()
+
+        if idx_menu < 1 or idx_menu > len(ACTIONS):
             break
-        if user_input == 0:
-            habits()
-        if user_input == 1:
-            records()
+
+        action = ACTIONS.get(str(idx_menu))
+        if action:
+            action()
     save_data()
 
 
