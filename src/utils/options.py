@@ -33,6 +33,16 @@ def list_status():
     print("=" * 64)
 
 
+def list_streaks():
+    data = load_data()
+    streaks = data["max_streaks"]
+
+    print("=" * 64)
+    for habit, streak in streaks.items():
+        print(f"{habit.title()}: {streak} days")
+    print("=" * 64)
+
+
 def main_menu():
     print("=" * 64)
     print("1. Habits")

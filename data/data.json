@@ -1,80 +1,9 @@
 {
-    "habits": [
-        "code",
-        "exercise",
-        "read",
-        "study"
-    ],
+    "habits": [],
     "status": [
         "completed",
         "incompleted"
     ],
-    "records": [
-        {
-            "date": "21-02-2026",
-            "name": "code",
-            "status": "completed"
-        },
-        {
-            "date": "21-02-2026",
-            "name": "exercise",
-            "status": "completed"
-        },
-        {
-            "date": "21-02-2026",
-            "name": "read",
-            "status": "completed"
-        },
-        {
-            "date": "21-02-2026",
-            "name": "study",
-            "status": "completed"
-        },
-        {
-            "date": "24-02-2026",
-            "name": "code",
-            "status": "completed"
-        },
-        {
-            "date": "24-02-2026",
-            "name": "exercise",
-            "status": "completed"
-        },
-        {
-            "date": "24-02-2026",
-            "name": "read",
-            "status": "completed"
-        },
-        {
-            "date": "24-02-2026",
-            "name": "study",
-            "status": "completed"
-        },
-        {
-            "date": "25-02-2026",
-            "name": "code",
-            "status": "completed"
-        },
-        {
-            "date": "25-02-2026",
-            "name": "exercise",
-            "status": "completed"
-        },
-        {
-            "date": "25-02-2026",
-            "name": "read",
-            "status": "completed"
-        },
-        {
-            "date": "25-02-2026",
-            "name": "study",
-            "status": "completed"
-        }
-    ],
-    "max_streaks": {
-        "code": 2,
-        "exercise": 2,
-        "read": 2,
-        "study": 2
-    }
+    "records": [],
+    "max_streaks": {}
 }

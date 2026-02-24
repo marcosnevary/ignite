@@ -1,12 +1,21 @@
 import pandas as pd
 
 from src.database import load_data, save_data
+from src.utils.clear_terminal import clear_terminal
+from src.utils.options import list_streaks
 
 
 def calculate_streaks():
+    clear_terminal()
     data = load_data()
     records = data["records"]
     max_streaks = data["max_streaks"]
+
+    if not records:
+        print("No records to calculate streaks.")
+        _ = input("Press enter to continue...")
+        return
+
     df_records = pd.DataFrame(records)
     df_records["date"] = pd.to_datetime(df_records["date"], format="%d-%m-%Y")
     df_records.sort_values(by="date", inplace=True)
@@ -37,7 +46,7 @@ def calculate_streaks():
         max_streak = max(max_streak, current_streak)
         max_streaks[habit] = max_streak
 
-    print(max_streaks)
+    list_streaks()
 
     save_data()
     _ = input("Press enter to continue...")
