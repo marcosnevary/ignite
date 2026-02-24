@@ -8,7 +8,8 @@ def create_habit():
     data = load_data()
     habits = data["habits"]
 
-    list_habits()
+    if habits:
+        list_habits()
     name = input("Enter the name of the new habit: ").lower().strip()
     if not name:
         print("Habit name cannot be empty.")

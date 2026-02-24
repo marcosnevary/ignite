@@ -18,7 +18,7 @@ def list_records():
     print("=" * 64)
     for record in records:
         print(
-            f"- {record['date']} - {record['name'].replace('_', ' ').title()} - {record['status'].replace('_', ' ').title()}"
+            f"{record['date']} - {record['name'].replace('_', ' ').title()} - {record['status'].replace('_', ' ').title()}"
         )
     print("=" * 64)
 
@@ -37,6 +37,7 @@ def main_menu():
     print("=" * 64)
     print("1. Habits")
     print("2. Records")
+    print("3. Statistics")
     print("=" * 64)
     return int(input("Enter the number of the option you want to select: "))
 
@@ -57,5 +58,12 @@ def records_menu():
     print("2. Edit an existing record")
     print("3. Remove an existing record")
     print("4. Show all records")
+    print("=" * 64)
+    return int(input("Enter the number of the option you want to select: "))
+
+
+def statistics_menu():
+    print("=" * 64)
+    print("1. Show streaks")
     print("=" * 64)
     return int(input("Enter the number of the option you want to select: "))
