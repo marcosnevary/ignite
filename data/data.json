@@ -1,9 +1,25 @@
 {
-    "habits": [],
+    "habits": [
+        "code",
+        "read"
+    ],
     "status": [
         "completed",
         "incompleted"
     ],
-    "records": [],
-    "max_streaks": {}
+    "records": [
+        {
+            "date": "26-02-2026",
+            "name": "code",
+            "status": "completed"
+        },
+        {
+            "date": "26-02-2026",
+            "name": "read",
+            "status": "completed"
+        }
+    ],
+    "max_streaks": {
+        "code": 2
+    }
 }

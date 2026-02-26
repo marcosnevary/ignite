@@ -1,26 +1,52 @@
+from rich import box
+from rich.console import Console
+from rich.table import Table
+
 from src.database import load_data
+
+console = Console()
 
 
 def list_habits():
     data = load_data()
     habits = data["habits"]
 
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("ID", style="bright_yellow", justify="center", width=2)
+    table.add_column("Habit", style="white", width=16)
     for idx, habit in enumerate(habits):
-        print(f"{idx + 1}. {habit.replace('_', ' ').title()}")
-    print("=" * 64)
+        table.add_row(f"{idx + 1}", f"{habit.replace('_', ' ').title()}")
+    console.print(table)
 
 
 def list_records():
     data = load_data()
     records = data["records"]
 
-    print("=" * 64)
-    for record in records:
-        print(
-            f"{record['date']} - {record['name'].replace('_', ' ').title()} - {record['status'].replace('_', ' ').title()}"
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("ID", style="bright_yellow", width=2)
+    table.add_column("Date", style="white", width=10)
+    table.add_column("Habit", style="white", width=10)
+    table.add_column("Status", style="white", width=42)
+
+    for i, record in enumerate(records):
+        table.add_row(
+            f"{i + 1}",
+            f"{record['date']}",
+            f"{record['name'].replace('_', ' ').title()}",
+            f"{record['status'].replace('_', ' ').title()}",
         )
-    print("=" * 64)
+    console.print(table)
 
 
 def list_status():
@@ -44,31 +70,68 @@ def list_streaks():
 
 
 def main_menu():
-    print("=" * 64)
-    print("1. Habits")
-    print("2. Records")
-    print("3. Statistics")
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Description", style="white", width=56)
+
+    options = {"1": "Habits", "2": "Records", "3": "Statistics", "0": "Exit"}
+
+    for option, description in options.items():
+        table.add_row(option, description)
+    console.print(table)
     return int(input("Enter the number of the option you want to select: "))
 
 
 def habits_menu():
-    print("=" * 64)
-    print("1. Create a new habit")
-    print("2. Edit an existing habit")
-    print("3. Remove an existing habit")
-    print("4. Show all habits")
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Description", style="white", width=56)
+
+    options = {
+        "1": "Create a new habit",
+        "2": "Edit an existing habit",
+        "3": "Remove an existing habit",
+        "4": "Show all habits",
+        "0": "Return to main menu",
+    }
+
+    for option, description in options.items():
+        table.add_row(option, description)
+    console.print(table)
     return int(input("Enter the number of the option you want to select: "))
 
 
 def records_menu():
-    print("=" * 64)
-    print("1. Create a new record")
-    print("2. Edit an existing record")
-    print("3. Remove an existing record")
-    print("4. Show all records")
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Description", style="white", width=56)
+
+    options = {
+        "1": "Create a new record",
+        "2": "Edit an existing record",
+        "3": "Remove an existing record",
+        "4": "Show all records",
+        "0": "Return to main menu",
+    }
+
+    for option, description in options.items():
+        table.add_row(option, description)
+    console.print(table)
     return int(input("Enter the number of the option you want to select: "))
 
 
