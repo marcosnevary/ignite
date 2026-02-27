@@ -69,6 +69,29 @@ def list_streaks():
     print("=" * 64)
 
 
+def timer_settings_menu():
+    data = load_data()
+    timer_settings = data["timer_settings"]
+
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("ID", style="bright_yellow", width=2)
+    table.add_column("Setting", style="bright_yellow", width=32)
+    table.add_column("Value", style="white", width=32)
+
+    for idx, (setting, value) in enumerate(timer_settings.items()):
+        table.add_row(
+            f"{idx + 1}", f"{setting.replace('_', ' ').title()}", f"{value} minutes"
+        )
+    console.print(table)
+
+    return int(input("Enter the number of the setting you want to change: "))
+
+
 def main_menu():
     table = Table(
         box=box.HORIZONTALS,
@@ -79,7 +102,13 @@ def main_menu():
     table.add_column("Option", style="bright_yellow", width=8)
     table.add_column("Description", style="white", width=56)
 
-    options = {"1": "Habits", "2": "Records", "3": "Statistics", "0": "Exit"}
+    options = {
+        "1": "Habits",
+        "2": "Records",
+        "3": "Pomodoro Timer",
+        "4": "Statistics",
+        "0": "Exit",
+    }
 
     for option, description in options.items():
         table.add_row(option, description)
@@ -138,5 +167,13 @@ def records_menu():
 def statistics_menu():
     print("=" * 64)
     print("1. Show streaks")
+    print("=" * 64)
+    return int(input("Enter the number of the option you want to select: "))
+
+
+def timer_menu():
+    print("=" * 64)
+    print("1. Configure timer")
+    print("2. Start timer")
     print("=" * 64)
     return int(input("Enter the number of the option you want to select: "))
