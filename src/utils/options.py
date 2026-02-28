@@ -17,8 +17,8 @@ def list_habits():
         header_style="bold bright_red",
     )
 
-    table.add_column("ID", style="bright_yellow", justify="center", width=2)
-    table.add_column("Habit", style="white", width=16)
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Habit", style="white", width=56)
     for idx, habit in enumerate(habits):
         table.add_row(f"{idx + 1}", f"{habit.replace('_', ' ').title()}")
     console.print(table)
@@ -34,10 +34,10 @@ def list_records():
         header_style="bold bright_red",
     )
 
-    table.add_column("ID", style="bright_yellow", width=2)
+    table.add_column("Option", style="bright_yellow", width=8)
     table.add_column("Date", style="white", width=10)
     table.add_column("Habit", style="white", width=10)
-    table.add_column("Status", style="white", width=42)
+    table.add_column("Status", style="white", width=36)
 
     for i, record in enumerate(records):
         table.add_row(
@@ -53,20 +53,36 @@ def list_status():
     data = load_data()
     status = data["status"]
 
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Status", style="white", width=56)
+
     for idx, stat in enumerate(status):
-        print(f"{idx + 1}. {stat.replace('_', ' ').title()}")
-    print("=" * 64)
+        table.add_row(f"{idx + 1}", f"{stat.replace('_', ' ').title()}")
+    console.print(table)
 
 
-def list_streaks():
+def list_stats(habit):
     data = load_data()
-    streaks = data["max_streaks"]
+    stats = data["habits_stats"][habit]
 
-    print("=" * 64)
-    for habit, streak in streaks.items():
-        print(f"{habit.title()}: {streak} days")
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Stat", style="white", width=32)
+    table.add_column("Value", style="white", width=32)
+
+    for idx, (stat, value) in enumerate(stats.items()):
+        table.add_row(f"{stat.replace('_', ' ').title()}", f"{value}")
+    console.print(table)
 
 
 def timer_settings_menu():
@@ -80,7 +96,7 @@ def timer_settings_menu():
     )
 
     table.add_column("ID", style="bright_yellow", width=2)
-    table.add_column("Setting", style="bright_yellow", width=32)
+    table.add_column("Setting", style="white", width=32)
     table.add_column("Value", style="white", width=32)
 
     for idx, (setting, value) in enumerate(timer_settings.items()):
@@ -164,16 +180,23 @@ def records_menu():
     return int(input("Enter the number of the option you want to select: "))
 
 
-def statistics_menu():
-    print("=" * 64)
-    print("1. Show streaks")
-    print("=" * 64)
-    return int(input("Enter the number of the option you want to select: "))
-
-
 def timer_menu():
-    print("=" * 64)
-    print("1. Configure timer")
-    print("2. Start timer")
-    print("=" * 64)
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Description", style="white", width=56)
+
+    options = {
+        "1": "Configure timer settings",
+        "2": "Start timer",
+        "0": "Return to main menu",
+    }
+
+    for option, description in options.items():
+        table.add_row(option, description)
+    console.print(table)
     return int(input("Enter the number of the option you want to select: "))

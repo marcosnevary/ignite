@@ -12,7 +12,7 @@ def timer():
     clear_terminal()
 
     idx_menu = timer_menu()
-    if idx_menu < 1 or idx_menu > len(ACTIONS):
+    if idx_menu < 0 or idx_menu > len(ACTIONS):
         print("Invalid option. Please try again.")
         _ = input("Press enter to continue...")
         return
