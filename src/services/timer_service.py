@@ -1,5 +1,8 @@
 import time
+from pathlib import Path
 
+import sounddevice as sd
+import soundfile as sf
 from rich.progress import BarColumn, Progress, ProgressColumn, Task, TextColumn
 from rich.text import Text
 
@@ -15,6 +18,13 @@ class RemainingTimeColumn(ProgressColumn):
         minutos = int((restante % 3600) // 60)
         segundos = int(restante % 60)
         return Text(f"{horas:02d}:{minutos:02d}:{segundos:02d}", style="cyan")
+
+
+def play_sound():
+    notification_sound_path = Path("assets") / "notification_sound.wav"
+    data, samplerate = sf.read(str(notification_sound_path))
+    sd.play(data, samplerate)
+    sd.wait()
 
 
 def start_timer():
@@ -41,6 +51,7 @@ def start_timer():
             time.sleep(1)
             progress.update(task, advance=1)
 
+    play_sound()
     _ = input("Pomodoro session completed! Press enter to start the break...")
 
     with Progress(
@@ -56,6 +67,7 @@ def start_timer():
             time.sleep(1)
             progress.update(task, advance=1)
 
+    play_sound()
     print("Break session completed!")
     option = input("Do you want to start another Pomodoro session? (y/n): ")
     if option.lower() == "y":
