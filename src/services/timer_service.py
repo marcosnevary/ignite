@@ -10,6 +10,9 @@ from src.database import load_data, save_data
 from src.utils.clear_terminal import clear_terminal
 from src.utils.options import timer_settings_menu
 
+global count
+count = 1
+
 
 class RemainingTimeColumn(ProgressColumn):
     def render(self, task: Task):
@@ -28,14 +31,17 @@ def play_sound():
 
 
 def start_timer():
+    global count
     clear_terminal()
 
     data = load_data()
     timer_settings = data["timer_settings"]
     break_minutes = timer_settings["break_duration"]
+    long_break_minutes = timer_settings["long_break_duration"]
     pomodoro_minutes = timer_settings["pomodoro_duration"]
 
     break_seconds = break_minutes * 60
+    long_break_seconds = long_break_minutes * 60
     pomodoro_seconds = pomodoro_minutes * 60
 
     with Progress(
@@ -61,9 +67,10 @@ def start_timer():
         TextColumn("•"),
         RemainingTimeColumn(),
     ) as progress:
-        task = progress.add_task("Break", total=break_seconds)
+        seconds = break_seconds if count % 4 != 0 else long_break_seconds
+        task = progress.add_task(f"{'Break':<8}", total=seconds)
 
-        for _ in range(int(break_seconds)):
+        for _ in range(int(seconds)):
             time.sleep(1)
             progress.update(task, advance=1)
 
@@ -71,6 +78,7 @@ def start_timer():
     print("Break session completed!")
     option = input("Do you want to start another Pomodoro session? (y/n): ")
     if option.lower() == "y":
+        count += 1
         start_timer()
     return
 
