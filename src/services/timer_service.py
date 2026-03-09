@@ -26,7 +26,7 @@ class RemainingTimeColumn(ProgressColumn):
 def play_sound():
     notification_sound_path = Path("assets") / "notification_sound.wav"
     data, samplerate = sf.read(str(notification_sound_path))
-    sd.play(data, samplerate)
+    sd.play(data * 0.5, samplerate)
     sd.wait()
 
 
@@ -96,5 +96,8 @@ def configure_timer():
     elif idx_menu == 2:
         new_value = int(input("Enter the new value for the timer setting: "))
         timer_settings["break_duration"] = new_value
+    elif idx_menu == 3:
+        new_value = int(input("Enter the new value for the timer setting: "))
+        timer_settings["long_break_duration"] = new_value
 
     save_data()
