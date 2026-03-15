@@ -1,20 +1,18 @@
-from src.core.habits import habits
-from src.core.records import records
-from src.core.statistics import statistics
+from src.core.goals import goals
+from src.core.steps import steps
 from src.core.timer import timer
 from src.database import save_data
 from src.utils.clear_terminal import clear_terminal
 from src.utils.options import main_menu
 
 ACTIONS = {
-    "1": habits,
-    "2": records,
+    "1": goals,
+    "2": steps,
     "3": timer,
-    "4": statistics,
 }
 
 
-def main():
+def main() -> None:
     while True:
         clear_terminal()
         idx_menu = main_menu()

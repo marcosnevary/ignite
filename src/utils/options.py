@@ -7,9 +7,9 @@ from src.database import load_data
 console = Console()
 
 
-def list_habits():
+def list_goals() -> None:
     data = load_data()
-    habits = data["habits"]
+    goals = data["goals"]
 
     table = Table(
         box=box.HORIZONTALS,
@@ -18,15 +18,15 @@ def list_habits():
     )
 
     table.add_column("Option", style="bright_yellow", width=8)
-    table.add_column("Habit", style="white", width=56)
-    for idx, habit in enumerate(habits):
-        table.add_row(f"{idx + 1}", f"{habit.replace('_', ' ').title()}")
+    table.add_column("Goal", style="white", width=56)
+    for idx, goal in enumerate(goals):
+        table.add_row(f"{idx + 1}", f"{goal.replace('_', ' ').title()}")
     console.print(table)
 
 
-def list_records():
+def list_steps() -> None:
     data = load_data()
-    records = data["records"]
+    steps = data["steps"]
 
     table = Table(
         box=box.HORIZONTALS,
@@ -36,10 +36,10 @@ def list_records():
 
     table.add_column("Option", style="bright_yellow", width=8)
     table.add_column("Date", style="white", width=10)
-    table.add_column("Habit", style="white", width=10)
+    table.add_column("Goal", style="white", width=10)
     table.add_column("Status", style="white", width=36)
 
-    for i, record in enumerate(records):
+    for i, record in enumerate(steps):
         table.add_row(
             f"{i + 1}",
             f"{record['date']}",
@@ -49,7 +49,7 @@ def list_records():
     console.print(table)
 
 
-def list_status():
+def list_status() -> None:
     data = load_data()
     status = data["status"]
 
@@ -67,25 +67,7 @@ def list_status():
     console.print(table)
 
 
-def list_stats(habit):
-    data = load_data()
-    stats = data["habits_stats"][habit]
-
-    table = Table(
-        box=box.HORIZONTALS,
-        show_header=True,
-        header_style="bold bright_red",
-    )
-
-    table.add_column("Stat", style="white", width=32)
-    table.add_column("Value", style="white", width=32)
-
-    for idx, (stat, value) in enumerate(stats.items()):
-        table.add_row(f"{stat.replace('_', ' ').title()}", f"{value}")
-    console.print(table)
-
-
-def timer_settings_menu():
+def timer_settings_menu() -> int:
     data = load_data()
     timer_settings = data["timer_settings"]
 
@@ -101,14 +83,16 @@ def timer_settings_menu():
 
     for idx, (setting, value) in enumerate(timer_settings.items()):
         table.add_row(
-            f"{idx + 1}", f"{setting.replace('_', ' ').title()}", f"{value} minutes"
+            f"{idx + 1}",
+            f"{setting.replace('_', ' ').title()}",
+            f"{value} minutes",
         )
     console.print(table)
 
     return int(input("Enter the number of the setting you want to change: "))
 
 
-def main_menu():
+def main_menu() -> int:
     table = Table(
         box=box.HORIZONTALS,
         show_header=True,
@@ -119,8 +103,8 @@ def main_menu():
     table.add_column("Description", style="white", width=56)
 
     options = {
-        "1": "Habits",
-        "2": "Records",
+        "1": "goals",
+        "2": "steps",
         "3": "Pomodoro Timer",
         "4": "Statistics",
         "0": "Exit",
@@ -132,7 +116,7 @@ def main_menu():
     return int(input("Enter the number of the option you want to select: "))
 
 
-def habits_menu():
+def goals_menu() -> int:
     table = Table(
         box=box.HORIZONTALS,
         show_header=True,
@@ -143,10 +127,10 @@ def habits_menu():
     table.add_column("Description", style="white", width=56)
 
     options = {
-        "1": "Create a new habit",
-        "2": "Edit an existing habit",
-        "3": "Remove an existing habit",
-        "4": "Show all habits",
+        "1": "Create a new goal",
+        "2": "Edit an existing goal",
+        "3": "Remove an existing goal",
+        "4": "Show all goals",
         "0": "Return to main menu",
     }
 
@@ -156,7 +140,7 @@ def habits_menu():
     return int(input("Enter the number of the option you want to select: "))
 
 
-def records_menu():
+def steps_menu() -> int:
     table = Table(
         box=box.HORIZONTALS,
         show_header=True,
@@ -167,10 +151,10 @@ def records_menu():
     table.add_column("Description", style="white", width=56)
 
     options = {
-        "1": "Create a new record",
-        "2": "Edit an existing record",
-        "3": "Remove an existing record",
-        "4": "Show all records",
+        "1": "Create a new step",
+        "2": "Edit an existing step",
+        "3": "Remove an existing step",
+        "4": "Show all steps",
         "0": "Return to main menu",
     }
 
@@ -180,7 +164,7 @@ def records_menu():
     return int(input("Enter the number of the option you want to select: "))
 
 
-def timer_menu():
+def timer_menu() -> int:
     table = Table(
         box=box.HORIZONTALS,
         show_header=True,

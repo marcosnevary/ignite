@@ -10,12 +10,11 @@ from src.database import load_data, save_data
 from src.utils.clear_terminal import clear_terminal
 from src.utils.options import timer_settings_menu
 
-global count
 count = 1
 
 
 class RemainingTimeColumn(ProgressColumn):
-    def render(self, task: Task):
+    def render(self, task: Task) -> Text:
         restante = task.total - task.completed
         horas = int(restante // 3600)
         minutos = int((restante % 3600) // 60)
@@ -23,15 +22,16 @@ class RemainingTimeColumn(ProgressColumn):
         return Text(f"{horas:02d}:{minutos:02d}:{segundos:02d}", style="cyan")
 
 
-def play_sound():
+def play_sound() -> None:
     notification_sound_path = Path("assets") / "notification_sound.wav"
     data, samplerate = sf.read(str(notification_sound_path))
     sd.play(data * 0.5, samplerate)
     sd.wait()
 
 
-def start_timer():
+def start_timer() -> None:
     global count
+
     clear_terminal()
 
     data = load_data()
@@ -80,23 +80,26 @@ def start_timer():
     if option.lower() == "y":
         count += 1
         start_timer()
-    return
 
 
-def configure_timer():
+def configure_timer() -> None:
     clear_terminal()
 
     data = load_data()
     timer_settings = data["timer_settings"]
 
+    idx_pomodoro_duration = 1
+    idx_break_duration = 2
+    idx_long_break_duration = 3
+
     idx_menu = timer_settings_menu()
-    if idx_menu == 1:
+    if idx_menu == idx_pomodoro_duration:
         new_value = int(input("Enter the new value for the timer setting: "))
         timer_settings["pomodoro_duration"] = new_value
-    elif idx_menu == 2:
+    elif idx_menu == idx_break_duration:
         new_value = int(input("Enter the new value for the timer setting: "))
         timer_settings["break_duration"] = new_value
-    elif idx_menu == 3:
+    elif idx_menu == idx_long_break_duration:
         new_value = int(input("Enter the new value for the timer setting: "))
         timer_settings["long_break_duration"] = new_value
 

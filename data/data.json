@@ -1,5 +1,5 @@
 {
-    "habits": [
+    "goals": [
         "read",
         "teste"
     ],
@@ -7,7 +7,7 @@
         "completed",
         "incompleted"
     ],
-    "records": [
+    "steps": [
         {
             "date": "25-02-2026",
             "name": "read",
@@ -24,16 +24,6 @@
             "status": "completed"
         }
     ],
-    "habits_stats": {
-        "read": {
-            "current_streak": 1,
-            "longest_streak": 2
-        },
-        "teste": {
-            "current_streak": 0,
-            "longest_streak": 0
-        }
-    },
     "timer_settings": {
         "pomodoro_duration": 25,
         "break_duration": 5,

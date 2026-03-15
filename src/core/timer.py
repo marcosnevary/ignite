@@ -8,7 +8,7 @@ ACTIONS = {
 }
 
 
-def timer():
+def timer() -> None:
     clear_terminal()
 
     idx_menu = timer_menu()
