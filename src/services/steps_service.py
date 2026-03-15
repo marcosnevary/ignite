@@ -1,8 +1,7 @@
-from datetime import UTC, datetime
-
 from src.database import load_data, save_data
 from src.utils.clear_terminal import clear_terminal
-from src.utils.options import list_goals, list_status, list_steps
+from src.utils.common import days
+from src.utils.options import days_menu, list_goals, list_status, list_steps
 
 
 def create_step() -> None:
@@ -19,25 +18,30 @@ def create_step() -> None:
 
     list_goals()
 
-    idx_goal = int(input("Select the goal to step (number): ")) - 1
+    idx_goal = int(input("Select the goal for the step (number): ")) - 1
     if not (0 <= idx_goal < len(goals)):
         print("Invalid goal number.")
         _ = input("Press enter to continue...")
         return
 
-    list_status()
+    step_description = input("Enter the description of the step: ")
 
-    idx_status = int(input("Select the status of the goal (number): ")) - 1
-    if not (0 <= idx_status < len(status)):
-        print("Invalid status number.")
+    active_days = days_menu()
+    active_days = active_days.replace(",", "")
+    active_days = active_days.replace(" ", "")
+    print(active_days)
+    if not all(day.strip().isdigit() and 1 <= int(day.strip()) <= 7 for day in active_days):  # noqa: PLR2004
+        print("Invalid days input.")
         _ = input("Press enter to continue...")
         return
+    active_days = [days[int(day.strip())] for day in active_days]
 
     steps.append(
         {
-            "date": datetime.now(UTC).strftime("%d-%m-%Y"),
-            "name": goals[idx_goal].lower().strip(),
-            "status": status[idx_status],
+            "goal": goals[idx_goal].lower().strip(),
+            "description": step_description,
+            "status": status[1],
+            "days": active_days,
         },
     )
     save_data()
@@ -97,10 +101,18 @@ def edit_step() -> None:
         _ = input("Press enter to continue...")
         return
 
+    days = days_menu().strip().split(",")
+    if not all(day.strip().isdigit() and 1 <= int(day.strip()) <= 7 for day in days):  # noqa: PLR2004
+        print("Invalid days input.")
+        _ = input("Press enter to continue...")
+        return
+    days = [int(day.strip()) for day in days]
+
     steps[idx_step] = {
-        "date": steps[idx_step]["date"],
-        "name": goals[idx_goal].lower().strip(),
+        "description": steps[idx_step]["description"],
+        "goal": goals[idx_goal].lower().strip(),
         "status": status[idx_status],
+        "days": days,
     }
     save_data()
 

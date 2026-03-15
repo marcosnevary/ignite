@@ -1,8 +1,11 @@
+from datetime import UTC, datetime
+
 from rich import box
 from rich.console import Console
 from rich.table import Table
 
 from src.database import load_data
+from src.utils.common import days
 
 console = Console()
 
@@ -35,17 +38,20 @@ def list_steps() -> None:
     )
 
     table.add_column("Option", style="bright_yellow", width=8)
-    table.add_column("Date", style="white", width=10)
     table.add_column("Goal", style="white", width=10)
+    table.add_column("Description", style="white", width=42)
     table.add_column("Status", style="white", width=36)
 
-    for i, record in enumerate(steps):
-        table.add_row(
-            f"{i + 1}",
-            f"{record['date']}",
-            f"{record['name'].replace('_', ' ').title()}",
-            f"{record['status'].replace('_', ' ').title()}",
-        )
+    day_name = datetime.now(UTC).strftime("%A")
+
+    for i, step in enumerate(steps):
+        if day_name in step["days"]:
+            table.add_row(
+                f"{i + 1}",
+                f"{step['goal'].replace('_', ' ').title()}",
+                f"{step['description']}",
+                f"{step['status'].replace('_', ' ').title()}",
+            )
     console.print(table)
 
 
@@ -65,6 +71,23 @@ def list_status() -> None:
     for idx, stat in enumerate(status):
         table.add_row(f"{idx + 1}", f"{stat.replace('_', ' ').title()}")
     console.print(table)
+
+
+def days_menu() -> str:
+    table = Table(
+        box=box.HORIZONTALS,
+        show_header=True,
+        header_style="bold bright_red",
+    )
+
+    table.add_column("Option", style="bright_yellow", width=8)
+    table.add_column("Day", style="white", width=56)
+
+    for idx, day in days.items():
+        table.add_row(f"{idx}", f"{day}")
+    console.print(table)
+
+    return input("Enter the number of the days (separated by commas): ")
 
 
 def timer_settings_menu() -> int:
@@ -103,8 +126,8 @@ def main_menu() -> int:
     table.add_column("Description", style="white", width=56)
 
     options = {
-        "1": "goals",
-        "2": "steps",
+        "1": "Goals",
+        "2": "Steps",
         "3": "Pomodoro Timer",
         "4": "Statistics",
         "0": "Exit",

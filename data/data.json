@@ -9,19 +9,18 @@
     ],
     "steps": [
         {
-            "date": "25-02-2026",
-            "name": "read",
-            "status": "completed"
-        },
-        {
-            "date": "26-02-2026",
-            "name": "read",
-            "status": "completed"
-        },
-        {
-            "date": "28-02-2026",
-            "name": "read",
-            "status": "completed"
+            "goal": "read",
+            "description": "Ler por 5 minutos de manh\u00e3",
+            "status": "incompleted",
+            "days": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ]
         }
     ],
     "timer_settings": {
